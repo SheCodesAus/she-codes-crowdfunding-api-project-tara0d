@@ -15,6 +15,14 @@ class Project(models.Model):
         on_delete=models.CASCADE,
         related_name='owner_projects'
     )
+    is_funded = models.BooleanField()
+    funding_deadline = models.DateTimeField()
+    min_players = models.IntegerField()
+    max_players = models.IntegerField()
+    min_age = models.IntegerField()
+    min_minutes = models.IntegerField()
+    max_minutes = models.IntegerField()
+
 
 class Pledge(models.Model):
     amount = models.IntegerField()
@@ -30,3 +38,4 @@ class Pledge(models.Model):
         on_delete=models.CASCADE,
         related_name='supporter_pledges'
     )
+    pledge_date = models.DateTimeField(auto_now_add=True) #TO
