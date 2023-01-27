@@ -7,7 +7,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     # phone_number = serializers.RegexField(regex=r"^\+61\d{9}$", required=True) Not quite working...
     class Meta:
         model = CustomUser
-        fields = ['id', 'first_name', 'last_name', 'email', 'username', 'password', 'phone_number',]
+        fields = ['id', 'first_name', 'last_name', 'email', 'username', 'password', 'phone_number', 'bio',]
         read_only_fields = ['id', 'email',]
     # id = serializers.ReadOnlyField()
     # username = serializers.CharField(max_length=200)

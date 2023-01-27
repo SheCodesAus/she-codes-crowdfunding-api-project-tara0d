@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=10)
     developer = models.BooleanField(default=False)    #Need to add way for admin to make created accounts developers ones
+    bio = models.CharField(max_length=300)
 
     def __str__(self):
         return self.username

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Project, Pledge
-from .serializers import ProjectSerializer, ProjectDetailSerializer,  PledgeSerializer
+from .models import Project, Pledge, Images, Categories
+from .serializers import ProjectSerializer, ProjectDetailSerializer,  PledgeSerializer, ImagesSerializer, CategoriesSerializer
 from django.http import Http404
 from rest_framework import status, generics, permissions
 from .permissions import IsOwnerOrReadOnly
@@ -65,8 +65,13 @@ class PledgeList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(supporter=self.request.user)
 
+class ImagesList(generics.ListCreateAPIView):
+    queryset = Images.objects.all()
+    serializer_class = ImagesSerializer
 
-
+class CategoriesList(generics.ListCreateAPIView):
+    queryset = Categories.objects.all()
+    serializer_class = CategoriesSerializer
 
 
 
