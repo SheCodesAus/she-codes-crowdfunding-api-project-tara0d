@@ -5,6 +5,8 @@ from .serializers import ProjectSerializer, ProjectDetailSerializer,  PledgeSeri
 from django.http import Http404
 from rest_framework import status, generics, permissions
 from .permissions import IsOwnerOrReadOnly
+from django.shortcuts import get_object_or_404, redirect
+
 
 class ProjectList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -57,6 +59,11 @@ class ProjectDetail(APIView):
             serializer.save()
             return Response(serializer.data)
 
+    def delete(self, request, pk):
+        project = self.get_object(pk)
+        project.delete()
+        return Response(status= status.HTTP_204_NO_CONTENT)
+
 
 class PledgeList(generics.ListCreateAPIView):
     queryset = Pledge.objects.all()
@@ -72,6 +79,23 @@ class ImagesList(generics.ListCreateAPIView):
 class CategoriesList(generics.ListCreateAPIView):
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
+
+class Liked(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request, pk):
+        """ when given a pk for a project, add user to the like, or if exists, remove user"""
+        project = get_object_or_404(Project, pk=pk)
+        if project.favourited_by.filter(username=request.user.username).exists():
+            project.favourited_by.remove(request.user)
+        else:
+            project.favourited_by.add(request.user)
+        serializer = ProjectSerializer(instance=project)    
+        return Response(serializer.data)
+
+
+
+
+
 
 
 

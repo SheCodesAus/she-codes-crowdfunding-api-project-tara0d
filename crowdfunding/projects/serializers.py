@@ -26,8 +26,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ['id', 'title', 'description', 'goal', 'is_open', 'date_created', 'owner', 'is_funded', 'funding_deadline',
         'min_players', 'max_players', 'min_age', 'min_minutes', 'max_minutes', 'project_images', 'pledges', 'categories',
+        'total_pledged', 'favourited_by',
         ]
-        read_only_fields = ['id', 'pledges', 'date_created', 'owner']
+        read_only_fields = ['id', 'pledges', 'date_created', 'owner', 'is_funded', 'total_pledged', 'favourited_by',]
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
@@ -37,27 +38,16 @@ class ProjectDetailSerializer(ProjectSerializer):
     project_images = ImagesSerializer(many=True)
     categories = CategoriesSerializer(many=True)
 
-    # categories = serializers.PrimaryKeyRelatedField(
-    #     queryset = Categories.objects.all(), 
-    #     many = True
-    # )
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
-        # instance.goal = validated_data.get('goal', instance.goal)
-        # instance.image = validated_data.get('image', instance.image)  NEED TO UPDATE
-        # instance.date_created = validated_data.get('date_created', instance.date_created)
-        # instance.owner = validated_data.get('owner', instance.owner)
         instance.is_open = validated_data.get('is_open', instance.is_open)
-        instance.is_funded = validated_data.get('is_funded', instance.is_funded)
-        # instance.funding_deadline = validated_data.get('funding_deadline', instance.funding_deadline)
         instance.min_players = validated_data.get('min_players', instance.min_players)
         instance.max_players = validated_data.get('max_players', instance.max_players)
         instance.min_age = validated_data.get('min_age', instance.min_age)
         instance.min_minutes = validated_data.get('min_minutes', instance.min_minutes)
         instance.max_minutes = validated_data.get('max_minutes', instance.max_minutes)
-        # instance.images = validated_data.get('images', instance)
         instance.save()
         return instance
 

@@ -1,0 +1,41 @@
+1.	Create a new user account:
+		Endpoint: /users/
+		Method: POST
+		Body:
+		{
+			“first_name”: “”,
+			“last_name”: “”,
+			“username”: “”,
+			“email”: “”,
+			“password”: “”,
+			“phone_number”: (must be 10 digits),
+			“bio”: “”
+		}
+
+3.	User login
+		Endpoint: /api-token-auth/
+		Method: POST
+		Body:
+		{
+			"username": "",
+			"password": ""
+		}
+
+2.	Create a new project:
+		Endpoint: /projects/
+		Method: POST
+		Body:
+		{
+			"title": "",
+			"description": "”,
+			"goal": ,
+			"is_open": true,
+			"date_created": (today’s date)
+			"is_funded": false,
+			"funding_deadline": "",
+			"min_players": ,
+			"max_players": ,
+			"min_age": ,
+			"min_minutes": ,
+			"max_minutes": 
+		}
