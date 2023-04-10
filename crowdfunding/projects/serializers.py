@@ -34,6 +34,14 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
+    
+    def get_owner(self, instance):
+        """
+        get the name of the project's owner
+        """
+        return instance.owner.username
+
+# blank=True,null=True which serializer do I add this to?
 
 class ProjectDetailSerializer(ProjectSerializer):
     pledges = PledgeSerializer(many=True, read_only=True)
