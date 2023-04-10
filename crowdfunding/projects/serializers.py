@@ -16,19 +16,21 @@ class CategoriesSerializer(serializers.ModelSerializer):
         fields = ['category_name']  #can inlcude 'id' if needed to be seen in insomnia
         read_only_fields = ['id']
 
-class ImagesSerializer(serializers.ModelSerializer):
+class ImagesSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Images
-        fields = ['image_url',]
+        fields = ['image_url', 'project', 'id']
+        read_only_fields = ['id']
 
 class ProjectSerializer(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField()
     class Meta:
         model = Project
         fields = ['id', 'title', 'description', 'goal', 'is_open', 'date_created', 'owner', 'is_funded', 'funding_deadline',
-        'min_players', 'max_players', 'min_age', 'min_minutes', 'max_minutes', 'project_images', 'pledges', 'categories',
-        'total_pledged', 'favourited_by',
+        'min_players', 'max_players', 'min_age', 'min_minutes', 'max_minutes', 'pledges', 'categories',
+        'total_pledged', 'favourited_by', 'project_images', 'thumbnail_image'
         ]
-        read_only_fields = ['id', 'pledges', 'date_created', 'owner', 'is_funded', 'total_pledged', 'favourited_by',]
+        read_only_fields = ['id', 'pledges', 'date_created', 'owner', 'is_funded', 'total_pledged', 'favourited_by', 'project_images']
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
@@ -48,6 +50,7 @@ class ProjectDetailSerializer(ProjectSerializer):
         instance.min_age = validated_data.get('min_age', instance.min_age)
         instance.min_minutes = validated_data.get('min_minutes', instance.min_minutes)
         instance.max_minutes = validated_data.get('max_minutes', instance.max_minutes)
+        instance.thumbnail_image = validated_data.get('thumbnail_image', instance.thumbnail_image)
         instance.save()
         return instance
 

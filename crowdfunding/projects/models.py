@@ -17,7 +17,7 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     goal = models.IntegerField()
-    is_open = models.BooleanField()
+    is_open = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True) 
     owner = models.ForeignKey(
         User,
@@ -32,6 +32,7 @@ class Project(models.Model):
     max_minutes = models.IntegerField()
     categories = models.ManyToManyField(Categories, related_name = 'project_categories', blank=True)
     favourited_by = models.ManyToManyField(User, related_name="favourites", blank=True)
+    thumbnail_image = models.URLField()
 
     def __str__(self) -> str:
         return self.title
@@ -72,7 +73,7 @@ class Images(models.Model):
         Project,
         on_delete=models.CASCADE,
         related_name="project_images",
-        blank=True,null=True)
+        )
 
     class Meta:
         verbose_name_plural = "images"
