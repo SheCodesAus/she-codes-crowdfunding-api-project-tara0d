@@ -65,7 +65,7 @@ class Pledge(models.Model):
     pledge_date = models.DateTimeField(auto_now_add=True) #TO
 
     def __str__(self) -> str:
-        return self.project
+        return str(self.project)
 
 class Images(models.Model):
     image_url = models.URLField()
@@ -79,4 +79,4 @@ class Images(models.Model):
         verbose_name_plural = "images"
 
     def __str__(self) -> str:
-        return self.project
+        return str(self.project)
